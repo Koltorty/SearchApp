@@ -44,6 +44,8 @@ namespace SearchApp
                 SizeTextBox.Text,
                 DatePicker.DisplayDate,
                 SubCatalogCheckbox.IsChecked);
+
+            ResultsGrid.ItemsSource = result;
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)

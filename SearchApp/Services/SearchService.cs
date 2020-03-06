@@ -63,7 +63,7 @@ namespace SearchApp.Services
                 files.AddRange(GetFiles(subDirectory, fileSize, date));
             }
 
-            return files.Select(file => GetSearchResult(file, query));
+            return files.Select(file => Task.Run(() => GetSearchResultAsync(file, query)).Result);
         }
 
         private static IEnumerable<FileInfo> GetFiles(string directoryPath, string fileSize, DateTime? date)
@@ -73,8 +73,8 @@ namespace SearchApp.Services
             
             if (!string.IsNullOrEmpty(fileSize))
             {
-                double.TryParse(fileSize, NumberStyles.Float, new NumberFormatInfo(), out var doulbeSize);
-                size = (long)doulbeSize * 1024 * 1024;
+                double.TryParse(fileSize, NumberStyles.Float, new NumberFormatInfo(), out var doubleSize);
+                size = (long)doubleSize * 1024 * 1024;
             }
 
             return files
@@ -83,14 +83,14 @@ namespace SearchApp.Services
                 .Where(file => size != 0 && file.Length <= size);
         }
 
-        private static SearchResultModel GetSearchResult(FileInfo file, string query)
+        private static async Task<SearchResultModel> GetSearchResultAsync(FileInfo file, string query)
         {
             var stringBuilder = new StringBuilder();
 
             using (var streamReader = file.OpenText())
             {
                 string line;
-                while ((line = streamReader.ReadLine()) != null)
+                while ((line = await streamReader.ReadLineAsync()) != null)
                 {
                     if (line.Contains(query))
                     {
