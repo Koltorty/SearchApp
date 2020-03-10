@@ -64,6 +64,7 @@
     <Compile Include="Extensions\FileInfoExtensions.cs" />
     <Compile Include="Models\SearchResultModel.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Constants\StringConstants.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

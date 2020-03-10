@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using SearchApp.Models;
+
+using SearchApp.Constants;
 using SearchApp.Services;
 
 namespace SearchApp
@@ -38,19 +27,35 @@ namespace SearchApp
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = searchService.Search(
-                CatalogPathTextBlock.Text,
-                SearchTextBox.Text,
-                SizeTextBox.Text,
-                DatePicker.DisplayDate,
-                SubCatalogCheckbox.IsChecked);
+            try
+            {
+                if (string.IsNullOrEmpty(CatalogPathTextBlock.Text))
+                {
+                    ErrorTextBox.Text = StringConstants.EmptyDirectoryPathError;
+                    return;
+                }
 
-            ResultsGrid.ItemsSource = result;
-        }
+                if (string.IsNullOrEmpty(SearchTextBox.Text))
+                {
+                    ErrorTextBox.Text = StringConstants.EmptySearchQueryError;
+                    return;
+                }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
+                var result = searchService.Search(
+                    CatalogPathTextBlock.Text,
+                    SearchTextBox.Text,
+                    SizeTextBox.Text,
+                    DatePicker.SelectedDate,
+                    SubCatalogCheckbox.IsChecked);
 
+                ResultsGrid.ItemsSource = result;
+            }
+            catch (Exception exception)
+            {
+                ErrorTextBox.Text = exception.InnerException != null
+                    ? exception.InnerException.Message
+                    : exception.Message;
+            }
         }
     }
 }

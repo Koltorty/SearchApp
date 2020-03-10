@@ -69,7 +69,7 @@ namespace SearchApp.Services
         private static IEnumerable<FileInfo> GetFiles(string directoryPath, string fileSize, DateTime? date)
         {
             long size = 0;
-            var files = new DirectoryInfo(directoryPath).GetFiles();
+            var files = new DirectoryInfo(directoryPath).GetFiles().FilterOnTextFiles();
             
             if (!string.IsNullOrEmpty(fileSize))
             {
@@ -77,10 +77,17 @@ namespace SearchApp.Services
                 size = (long)doubleSize * 1024 * 1024;
             }
 
-            return files
-                .FilterOnTextFiles()
-                .Where(file => date.HasValue && file.CreationTime <= date)
-                .Where(file => size != 0 && file.Length <= size);
+            if (date.HasValue)
+            {
+                files = files.Where(file => file.CreationTime <= date);
+            }
+
+            if (size != 0)
+            {
+                files = files.Where(file => size != 0 && file.Length <= size);
+            }
+
+            return files;
         }
 
         private static async Task<SearchResultModel> GetSearchResultAsync(FileInfo file, string query)

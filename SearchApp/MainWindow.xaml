@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SearchApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="452" Width="405">
+        Title="MainWindow" Height="494" Width="405">
     <Grid>
         <Button x:Name="SearchButton" Content="Поиск" HorizontalAlignment="Left" Margin="259,175,0,0" VerticalAlignment="Top" Width="55" Height="25" Click="SearchButton_Click"/>
         <TextBlock x:Name="CatalogPathTextBlock" HorizontalAlignment="Left" Margin="101,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="277"/>
         <Button x:Name="CatalogPathButton" Content="Каталог" HorizontalAlignment="Left" Margin="19,29,0,0" VerticalAlignment="Top" Width="66" Height="26" Click="CatalogPathButton_Click"/>
         <CheckBox x:Name="SubCatalogCheckbox" Content="Искать в подкаталогах" HorizontalAlignment="Left" Margin="19,142,0,0" VerticalAlignment="Top" Height="21"/>
-        <TextBox x:Name="SizeTextBox" HorizontalAlignment="Left" Height="23" Margin="19,69,0,0" TextWrapping="Wrap" Text="Размер файла (в мб.)" VerticalAlignment="Top" Width="128"/>
-        <Button x:Name="StopButton" Content="Стоп" HorizontalAlignment="Left" Margin="324,175,0,0" VerticalAlignment="Top" Width="54" Height="25" Click="StopButton_Click"/>
+        <TextBox x:Name="SizeTextBox" HorizontalAlignment="Left" Height="23" Margin="153,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128"/>
         <TextBox x:Name="SearchTextBox" HorizontalAlignment="Left" Height="25" Margin="19,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230"/>
         <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="19,106,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"/>
-        <DataGrid x:Name="ResultsGrid" HorizontalAlignment="Left" Height="191" Margin="19,220,0,0" VerticalAlignment="Top" Width="359" AutoGenerateColumns="False">
+        <DataGrid x:Name="ResultsGrid" HorizontalAlignment="Left" Height="192" Margin="19,248,0,0" VerticalAlignment="Top" Width="359" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FileName}" Header="File name" Width="150"/>
                 <DataGridTextColumn Binding="{Binding Lines}" Header="Lines" Width="207"/>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="19,70,0,0" TextWrapping="Wrap" Text="Размер файла (в мб.) :" VerticalAlignment="Top" Height="22"/>
+        <TextBlock x:Name="ErrorTextBox" HorizontalAlignment="Left" Margin="19,215,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="359"/>
     </Grid>
 </Window>
